@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 03-Ago-2022 às 16:16
+-- Tempo de geração: 03-Ago-2022 às 17:18
 -- Versão do servidor: 8.0.27
 -- versão do PHP: 7.4.26
 
@@ -32,8 +32,13 @@ CREATE TABLE IF NOT EXISTS `contato` (
   `nome` varchar(100) DEFAULT NULL,
   `email` varchar(100) NOT NULL,
   `tel` varchar(20) DEFAULT NULL,
+  `linkFoto` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `contato`
+--
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

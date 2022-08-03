@@ -1,5 +1,18 @@
 <?php
-    $conexao = new mysqli("127.0.0.1", "root", "", "site_teste");    
+    $conexao = new mysqli("127.0.0.1", "root", "", "site_teste");
+    if(isset($_POST['btnCadastrar'])){
+        
+        $nome = $_POST['txtNome']; 
+        $email = $_POST['txtEmail']; 
+        $tel = $_POST['txtTel'];
+        $linkFoto = $_POST['linkFoto'];
+
+        $cmdSql =  "INSERT INTO contato(nome, email, tel, linkFoto) VALUES ('$nome','$email','$tel','$linkFoto');";
+        if(!$conexao->query($cmdSql)){
+            echo "<script>alert('Erro de cadastro')</script>";
+        }
+    }
+   
 ?>
 
 <!doctype html>
@@ -22,6 +35,11 @@
             </div>
 
             <div class="mb-3">
+                <label class="form-label">Foto</label>
+                <input type="text" class="form-control" name="linkFoto">
+            </div>
+
+            <div class="mb-3">
                 <label class="form-label">E-mail</label>
                 <input type="email" class="form-control" name="txtEmail">
             </div>
@@ -30,30 +48,42 @@
                 <label class="form-label">Telefone</label>
                 <input type="tel" class="form-control" name="txtTel">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary" name="btnCadastrar">Submit</button>
         </form>
 
         <hr>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">E-mail</th>
-                    <th scope="col">Tel</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">Eliton</th>
-                    <td>gasdffgsd</td>
-                    <td>fsadfds</td>
-                </tr>                
-            </tbody>
-        </table>
+        
+
+        <div class="row row-cols-1 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4">
+
+            <?php
+                $cmdSql = 'SELECT * FROM contato ORDER BY nome asc';
+                $dados = $conexao->query($cmdSql);
+                if($dados->num_rows > 0){
+                    $resultado = $dados->fetch_all();
+
+                    foreach ($resultado as $linha) {
+                    echo '<div class="col">
+                                <div class="card">
+                                <img src="'.$linha[3].'" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">'.$linha[0].'</h5>
+                                    <p class="card-text">'.$linha[1].'</p>
+                                    <p class="card-text">'.$linha[2].'</p>
+                                </div>
+                                </div>
+                            </div>';                    
+                    
+                    }
+                }
+            ?>
+        </div>
+     
     </div>
 
 
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 </body>
